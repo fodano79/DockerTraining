@@ -1,0 +1,1 @@
+docker run -d -p 1433:1433 -e sa_password=Welcome2Docker! -e ACCEPT_EULA=Y --mount type=volume,source=myvolume,target=c:/DBs --mount type=bind,source=C:/Tools/Docker/SqlExpress/backup,target=c:/shared microsoft/mssql-server-windows-express

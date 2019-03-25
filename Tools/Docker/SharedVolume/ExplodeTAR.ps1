@@ -1,0 +1,2 @@
+docker run -it --rm --mount type=bind,source=C:/Tools/Docker/SharedVolume/shared,target=/shared alpine:latest
+#docker run -it --rm --mount type=bind,source=C:/Tools/Docker/SharedVolume/shared,target=/shared alpine:latest tar -xzf "/shared/secretfile.tar.gzip" -C "/shared/"

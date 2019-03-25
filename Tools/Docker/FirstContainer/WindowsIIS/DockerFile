@@ -1,0 +1,27 @@
+############################################
+# Windows Server Core (1809) with IIS
+# DockerFile Version: 1.0
+############################################
+
+# Base Image
+FROM mcr.microsoft.com/powershell:6.1.3-windowsservercore-1809
+
+# Maintainer
+LABEL Author="Francesco Sodano" \
+    Version=1.0
+
+# Image Preparation
+USER ContainerAdministrator
+
+# Adding Features
+RUN powershell.exe -NoProfile
+RUN powershell.exe -NoProfile -Command Install-WindowsFeature Web-Server -Confirm:$false
+RUN powershell.exe -NoProfile -Command Invoke-WebRequest -UseBasicParsing -Uri "https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.6/ServiceMonitor.exe" -OutFile "C:\ServiceMonitor.exe"
+# Adding Content
+# RUN powershell.exe -NoProfile -Command Remove-Item -Recurse C:\inetpub\wwwroot\*
+ADD Index.html C:/inetpub/wwwroot/Index.html
+WORKDIR /inetpub/wwwroot
+
+# Expose Ports and EntryPoint
+EXPOSE 80
+ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]
